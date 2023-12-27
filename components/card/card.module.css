@@ -1,0 +1,47 @@
+.card {
+    width: 28%;
+    height: 160px;
+    box-shadow: inset 0 0 10px 10px #0d1217;
+    background: #161f28;
+}
+
+.cardHighlighted {
+    box-shadow: inset 0 0 10px 10px rgb(15, 22, 30);
+    background: radial-gradient(rgb(40, 71, 109), rgb(37, 61, 90), rgb(34, 55, 80), rgb(31, 49, 72), rgb(26, 38, 54), rgb(22, 33, 47), #151c24);
+}
+
+.bettedPointDiv {
+    position: absolute;
+    height: 35px;
+    min-width: 40px;
+    background: rgb(161, 7, 7);
+    top: -2px;
+    right: 5px;
+    border-radius: 3px 3px 50% 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+    font-size: 14px;
+    box-shadow: 0 5px 10px black;
+}
+
+@media screen and (min-width: 768px) {
+    .card {
+        width: 22%;
+        height: 200px;
+    }
+
+    .bettedPointDiv {
+        height: 40px;
+        font-weight: 700;
+        top: -4px;
+        right: 20px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .card {
+        width: 15%;
+    }
+}

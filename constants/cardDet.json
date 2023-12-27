@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "umbrella",
+    "icon": "./images/umbrella.png"
+  },
+  {
+    "id": 2,
+    "name": "football",
+    "icon": "./images/football.png"
+  },
+  {
+    "id": 3,
+    "name": "sun",
+    "icon": "./images/sun.png"
+  },
+  {
+    "id": 4,
+    "name": "diya",
+    "icon": "./images/diya.png"
+  },
+  {
+    "id": 5,
+    "name": "cow",
+    "icon": "./images/cow.png"
+  },
+  {
+    "id": 6,
+    "name": "bucket",
+    "icon": "./images/bucket.png"
+  },
+  {
+    "id": 7,
+    "name": "kite",
+    "icon": "./images/kite.png"
+  },
+  {
+    "id": 8,
+    "name": "lattu",
+    "icon": "./images/lattu.png"
+  },
+  {
+    "id": 9,
+    "name": "rose",
+    "icon": "./images/rose.png"
+  },
+  {
+    "id": 10,
+    "name": "butterfly",
+    "icon": "./images/butterfly.png"
+  },
+  {
+    "id": 11,
+    "name": "pigeon",
+    "icon": "./images/pigeon.png"
+  },
+  {
+    "id": 12,
+    "name": "rabbit",
+    "icon": "./images/rabbit.png"
+  }
+]
