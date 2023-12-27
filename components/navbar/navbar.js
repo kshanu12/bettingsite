@@ -5,16 +5,6 @@ import styles from "./navbar.module.css";
 function Navbar(props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      props.setTimer((prevTimer) => prevTimer - 1);
-    }, 1000);
-    if (props.timer === 0)
-      props.setTimer(30)
-
-    return () => clearInterval(intervalId);
-  }, [props.timer]);
-
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;

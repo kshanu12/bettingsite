@@ -12,7 +12,7 @@ function Modal({ onClose, onBetSubmit, modalIcon }) {
   return (
     <div className="fixed w-3/4 md:w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-[#223851] to-[#172733] shadow-2xl shadow-black rounded-3xl p-6 z-50">
       <span
-        className="absolute top-1 right-5 text-[#a10707] text-4xl font-bold"
+        className="absolute top-1 right-5 text-[#a10707] text-4xl font-bold cursor-pointer"
         onClick={onClose}
       >
         &times;
