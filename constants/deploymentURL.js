@@ -7,10 +7,10 @@ if (typeof window !== "undefined") {
   ) {
     DEPLOYED_URL = "http://localhost:3030";
   } else {
-    DEPLOYED_URL = "https://royal-gaming.vercel.app/";
+    DEPLOYED_URL = "https://royal-gaming.onrender.com";
   }
 } else {
-  DEPLOYED_URL = "https://royal-gaming.vercel.app/";
+  DEPLOYED_URL = "https://royal-gaming.onrender.com";
 }
 
 export default DEPLOYED_URL;
