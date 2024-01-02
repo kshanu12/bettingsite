@@ -1,0 +1,16 @@
+let DEPLOYED_URL;
+
+if (typeof window !== "undefined") {
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  ) {
+    DEPLOYED_URL = "http://localhost:3030";
+  } else {
+    DEPLOYED_URL = "https://royal-gaming.vercel.app/";
+  }
+} else {
+  DEPLOYED_URL = "https://royal-gaming.vercel.app/";
+}
+
+export default DEPLOYED_URL;

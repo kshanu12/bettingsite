@@ -4,6 +4,7 @@ import cardDet from "@/constants/cardDet.json";
 import Modal from "../modal";
 import styles from "./cards.module.css";
 import { io } from "socket.io-client";
+import DEPLOYED_URL from "@/constants/deploymentURL";
 
 function Cards(props) {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -85,7 +86,8 @@ function Cards(props) {
 
   useEffect(() => {
     console.log("inside useeffect");
-    const socket = io.connect("http://localhost:3030");
+    const socket = io.connect(DEPLOYED_URL);
+    console.log(DEPLOYED_URL)
 
     socket.on("connect_error", (error) => {
       console.error("Socket connection error:", error);
