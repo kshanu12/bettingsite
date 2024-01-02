@@ -10,7 +10,7 @@ function Cards(props) {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
   const [lastHighlightedIndex, setLastHighlightedIndex] = useState(-1);
-  const stopIndex = 5;
+  const [stopIndex, setStopIndex] = useState(0);
   const [randomRotations, setRandomRotaions] = useState(
     Math.floor(Math.random() * (3 - 2 + 1) + 2)
   );
@@ -22,9 +22,14 @@ function Cards(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [modalIcon, setModalIcon] = useState("");
   const [socket, setSocket] = useState(undefined);
-  
+
   useEffect(() => {
     if (props.timer === 60) {
+      socket.emit("generate_result");
+      socket.on("card_won", (cardWon) => {
+        console.log("cardWon", cardWon);
+        setStopIndex(cardWon);
+      });
       setHighlighting(true);
       setIsModalOpen(false);
     }
@@ -35,7 +40,7 @@ function Cards(props) {
       }, 200);
 
     return () => clearInterval(intervalId);
-  }, [props.timer, currentRotations]);
+  }, [props.timer, currentRotations, highlighting]);
 
   const customStyle = {
     height: `calc(100vh - 4rem)`,
@@ -48,16 +53,21 @@ function Cards(props) {
   }, [highlightedIndex]);
 
   useEffect(() => {
-    if (
-      currentRotations === randomRotations &&
-      highlightedIndex === stopIndex
-    ) {
+    if (currentRotations >= randomRotations && highlightedIndex === stopIndex) {
+      setCardBets((prevBets) => {
+        return prevBets.map((card, index) => ({
+          ...card,
+          totalBet: 0,
+          userBet: 0,
+        }));
+      });
+      socket.emit("new_game");
       setHighlighting(false);
       setLastHighlightedIndex(stopIndex);
       setCurrentRotations(0);
       setHighlightedIndex(0);
     }
-  }, [currentRotations, highlightedIndex]);
+  }, [currentRotations, highlightedIndex, randomRotations]);
 
   const openModal = (index) => {
     if (!highlighting) setIsModalOpen(true);
@@ -71,7 +81,7 @@ function Cards(props) {
 
   const handleBetSubmit = async (amount) => {
     console.log(amount);
-    socket.emit("new_bet",selectedCardIndex,amount);
+    socket.emit("new_bet", selectedCardIndex, amount);
     setCardBets((prevBets) => {
       const newBets = [...prevBets];
       newBets[selectedCardIndex] = {
@@ -87,7 +97,7 @@ function Cards(props) {
   useEffect(() => {
     console.log("inside useeffect");
     const socket = io.connect(DEPLOYED_URL);
-    console.log(DEPLOYED_URL)
+    console.log(DEPLOYED_URL);
 
     socket.on("connect_error", (error) => {
       console.error("Socket connection error:", error);
