@@ -3,7 +3,7 @@ import Card from "./card";
 import cardDet from "@/constants/cardDet.json";
 import Modal from "../modal";
 import styles from "./cards.module.css";
-import { useSearchParams } from "next/navigation";
+import { io } from "socket.io-client";
 
 function Cards(props) {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -11,7 +11,7 @@ function Cards(props) {
   const [lastHighlightedIndex, setLastHighlightedIndex] = useState(-1);
   const stopIndex = 5;
   const [randomRotations, setRandomRotaions] = useState(
-    Math.floor(Math.random() * (4 - 2 + 1) + 2)
+    Math.floor(Math.random() * (3 - 2 + 1) + 2)
   );
   const [currentRotations, setCurrentRotations] = useState(0);
   const [cardBets, setCardBets] = useState(
@@ -20,9 +20,10 @@ function Cards(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [modalIcon, setModalIcon] = useState("");
-
+  const [socket, setSocket] = useState(undefined);
+  
   useEffect(() => {
-    if (props.timer == 0) {
+    if (props.timer === 60) {
       setHighlighting(true);
       setIsModalOpen(false);
     }
@@ -67,7 +68,9 @@ function Cards(props) {
     setSelectedCardIndex(null);
   };
 
-  const handleBetSubmit = (amount) => {
+  const handleBetSubmit = async (amount) => {
+    console.log(amount);
+    socket.emit("new_bet",selectedCardIndex,amount);
     setCardBets((prevBets) => {
       const newBets = [...prevBets];
       newBets[selectedCardIndex] = {
@@ -79,6 +82,33 @@ function Cards(props) {
 
     closeModal();
   };
+
+  useEffect(() => {
+    console.log("inside useeffect");
+    const socket = io.connect("http://localhost:3030");
+
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
+
+    socket.on("refresh_changes", (total) => {
+      console.log("TOTAL SUM", total);
+      setCardBets((prevBets) => {
+        return prevBets.map((card, index) => ({
+          ...card,
+          totalBet: total[index],
+        }));
+      });
+      console.log(cardBets[0].totalBet);
+    });
+
+    setSocket(socket);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
 
   return (
     <>
