@@ -1,0 +1,51 @@
+.tableHeading {
+    background: rgb(231, 231, 231);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: 500;
+    width: 400px;
+}
+
+.tableData {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-weight: 500;
+    width: 400px;
+    border-radius: 5px;
+    margin: 5px 0;
+    color: rgb(184, 184, 184)
+}
+
+.tableData:nth-child(odd) {
+    background: #223850;
+}
+
+.tableData:nth-child(odd):hover {
+    background: #315981;
+}
+
+.tableData:nth-child(even) {
+    background: #14212e;
+}
+
+.tableData:nth-child(even):hover {
+    background: #315981;
+}
+
+.tableCell {
+    width: 80px;
+    text-align: center;
+}
+
+@media (min-width: 767px) {
+    .tableHeading{
+        width: 600px;
+    }
+
+    .tableData  {
+        width: 600px;
+    }
+}

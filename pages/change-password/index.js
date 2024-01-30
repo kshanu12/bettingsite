@@ -1,10 +1,9 @@
-import Login from "@/components/login";
+import ChangePassword from "@/components/changePassword";
 
 export default function Home() {
-
   return (
     <div className="min-h-screen bg-[#0e212f]">
-      <Login />
+      <ChangePassword/>
     </div>
   );
 }

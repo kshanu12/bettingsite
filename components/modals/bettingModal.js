@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-function Modal({ onClose, onBetSubmit, modalIcon }) {
+function Modal({ onClose, onBetSubmit, modalIcon, coins, setCoins }) {
   const [betAmount, setBetAmount] = useState("");
+  const [isLowBalance, setIsLowBalance] = useState(false);
 
+  console.log("outside",coins," ",typeof coins);
   const handleSubmit = () => {
     if (betAmount && !isNaN(betAmount) && parseInt(betAmount) > 0) {
-      onBetSubmit(parseInt(betAmount));
+      console.log("inside",coins);
+      if (parseInt(betAmount) > coins) {
+        setIsLowBalance(true);
+      } else {
+        setCoins(coins - parseInt(betAmount));
+        onBetSubmit(parseInt(betAmount));
+      }
     }
   };
 
@@ -45,6 +53,11 @@ function Modal({ onClose, onBetSubmit, modalIcon }) {
           Submit Bet
         </button>
       </div>
+      {isLowBalance ? (
+        <div className="flex justify-center text-red-700 mt-2 font-semibold">
+          *You don't have enough coins
+        </div>
+      ) : null}
     </div>
   );
 }
