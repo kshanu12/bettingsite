@@ -3,8 +3,10 @@ import TransactionModal from "./modals/transactionModal";
 import DEPLOYED_URL from "@/constants/deploymentURL";
 import axios from "axios";
 import { useToken } from "@/hooks/tokenContext.js";
+import { useRouter } from "next/router";
 
 function ProfileUserDetails(props) {
+  const router=useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionType, setTransactionType] = useState("");
   const [addCoins, setAddCoins] = useState(0);
@@ -27,7 +29,7 @@ function ProfileUserDetails(props) {
     );
     console.log(res);
     props.setToggleState(!props.toggleState);
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   };
 
   const handleTransactionModal = (transactionType) => {
@@ -36,8 +38,10 @@ function ProfileUserDetails(props) {
   };
 
   const logoutHandler = () => {
-    
-  }
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiry");
+    router.push("/")
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);

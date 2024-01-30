@@ -11,7 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { setTokenInfo } = useToken();
   const [credentialsInfo, setCredentialsInfo] = useState(true);
-  const { token, tokenExpiry, isAdmin } = useToken();
+  let { token, tokenExpiry, isAdmin } = useToken();
 
   const loginHandler = async () => {
     try {
@@ -34,8 +34,13 @@ export default function Login() {
   };
 
   useEffect(() => {
+    token = localStorage.getItem("token");
+    tokenExpiry = localStorage.getItem("tokenExpiry");
+  }, []);
+
+  useEffect(() => {
     const redirectToDashboard = async () => {
-      console.log("inside redirectToDashboard")
+      console.log("inside redirectToDashboard");
       if (token && tokenExpiry && tokenExpiry > new Date().getTime()) {
         if (isAdmin) {
           router.push("/admin");
@@ -45,7 +50,7 @@ export default function Login() {
       }
     };
     redirectToDashboard();
-  }, [token,tokenExpiry,isAdmin]);
+  }, [token, tokenExpiry, isAdmin]);
 
   const loginButtonWidth = { width: "300px" };
 
