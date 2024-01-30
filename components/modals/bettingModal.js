@@ -55,7 +55,7 @@ function Modal({ onClose, onBetSubmit, modalIcon, coins, setCoins }) {
       </div>
       {isLowBalance ? (
         <div className="flex justify-center text-red-700 mt-2 font-semibold">
-          *You don't have enough coins
+          *You don&apos;t have enough coins
         </div>
       ) : null}
     </div>

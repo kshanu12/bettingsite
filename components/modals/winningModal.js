@@ -14,7 +14,7 @@ function WinningModal({ onWinningModalClose, coinsWon }) {
           🎉Congratulations!
         </div>
         <div className="mt-4 text-lg font-semibold text-green-500">
-          You're a Winner!🤑 You've won Rs {coinsWon}!
+          You&apos;re a Winner!🤑 You&apos;ve won Rs {coinsWon}!
         </div>
       </div>
       <div className="flex justify-around mt-4">
