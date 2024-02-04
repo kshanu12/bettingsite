@@ -3,15 +3,14 @@ import Card from "./card";
 import cardDet from "@/constants/cardDet.json";
 import Modal from "../modals/bettingModal";
 import styles from "./cards.module.css";
-import { io } from "socket.io-client";
 import DEPLOYED_URL from "@/constants/deploymentURL";
 import { useToken } from "@/hooks/tokenContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 import WinningModal from "../modals/winningModal";
+import { useSocket } from "@/hooks/socketContext";
 
 function Cards(props) {
-  const [userOnline, setUserOnline] = useState(0);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
   const [lastHighlightedIndex, setLastHighlightedIndex] = useState(-1);
@@ -27,7 +26,7 @@ function Cards(props) {
   const [isWinningModalOpen, setIsWinningModalOpen] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [modalIcon, setModalIcon] = useState("");
-  const [socket, setSocket] = useState(undefined);
+  const {socket,userOnline} = useSocket();
   let { token, tokenExpiry } = useToken();
   const router = useRouter();
   const [coins, setCoins] = useState();
@@ -44,7 +43,6 @@ function Cards(props) {
   const [intervalId, setIntervalId] = useState(0);
   useEffect(() => {
     const getResults = async () => {
-      // if (props.timer === 60) {
       try {
         let res;
         socket.emit("generate_result");
@@ -78,7 +76,6 @@ function Cards(props) {
       } catch (error) {
         console.error("Error during async operations:", error);
       }
-      // }
       setIntervalId(
         highlighting
           ? setInterval(() => {
@@ -153,12 +150,6 @@ function Cards(props) {
   };
 
   useEffect(() => {
-    const socket = io.connect(DEPLOYED_URL);
-
-    socket.on("connect_error", (error) => {
-      console.error("Socket connection error:", error);
-    });
-
     socket.on("refresh_changes", (total) => {
       setCardBets((prevBets) => {
         return prevBets.map((card, index) => ({
@@ -167,16 +158,6 @@ function Cards(props) {
         }));
       });
     });
-
-    socket.on("user_online", (count) => {
-      setUserOnline(count);
-    });
-
-    setSocket(socket);
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   const onBetHandler = (det, index) => {

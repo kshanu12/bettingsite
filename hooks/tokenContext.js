@@ -21,7 +21,6 @@ export const TokenProvider = ({ children }) => {
     const storedToken = localStorage.getItem("token");
     const storedTokenExpiry = localStorage.getItem("tokenExpiry");
     const storedIsAdmin = localStorage.getItem("isAdmin");
-    console.log("stored token", storedToken);
 
     if (storedToken && storedTokenExpiry && storedIsAdmin) {
       setTokenInfo(
