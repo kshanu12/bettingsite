@@ -18,12 +18,13 @@ function ProfileUserDetails(props) {
 
   const handleTransactionSubmit = async () => {
     console.log(DEPLOYED_URL + "/transaction/user/addTransaction");
+    let totalCoins = transactionType === "Withdraw" ? props.coins - addCoins:props.coins;
     const res = await axios.post(
       DEPLOYED_URL + "/transaction/user/addTransaction",
       {
         coins: addCoins,
         transactionType,
-        totalCoins: props.coins,
+        totalCoins: totalCoins,
       },
       { headers }
     );
@@ -111,6 +112,7 @@ function ProfileUserDetails(props) {
             transactionType={transactionType}
             setTransactionCoins={setAddCoins}
             handleTransactionSubmit={handleTransactionSubmit}
+            userCoins={props.coins}
           />
         </>
       )}

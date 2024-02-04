@@ -5,6 +5,7 @@ function TransactionModal({
   transactionType,
   setTransactionCoins,
   handleTransactionSubmit,
+  userCoins
 }) {
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -12,7 +13,10 @@ function TransactionModal({
     const amount = parseInt(e.target.value);
     if (amount < 100) {
       setErrorMessage(`*Minimum withdrawal amount is 100`);
-    } else {
+    } else if (amount > userCoins) {
+        setErrorMessage(`*Withdrawal amount must not exceed available coins`);
+    }
+    else{
       setErrorMessage("");
     }
     setTransactionCoins(amount);
